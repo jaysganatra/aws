@@ -41,14 +41,26 @@ sudo apt-get install -y \
     php8.1-xml \
     php8.1-zip
 
+sudo apt-get update -y 
 
 sudo apt-get install -y php8.1-xml
 sudo apt-get install -y php8.1-zip
+sudo apt-get install -y php8.1-mysql
+sudo apt-get install -y mysql-server
 
-
+sudo systemctl start mysql
 sudo systemctl restart apache2
 
-scp -i "file.pem" file.zip ubuntu@ec2-13-234-59-9.ap-south-1.compute.amazonaws.com:/var/www/html
+scp -i "exam-new-key.pem" exam.zip ubuntu@ec2-13-234-59-9.ap-south-1.compute.amazonaws.com:/var/www/html
+scp -i "exam-new-key.pem" db.sql ubuntu@ec2-13-234-59-9.ap-south-1.compute.amazonaws.com:/var/www/html
+sudo mysql -u root -p examportal < db.sql
+
+CREATE USER 'dbadmin'@'localhost' IDENTIFIED BY 'Password@321';
+GRANT ALL PRIVILEGES ON *.* TO 'dbadmin'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+
+
 
 
 
